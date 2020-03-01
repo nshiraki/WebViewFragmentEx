@@ -101,7 +101,6 @@ class CustomWebViewFragment : Fragment() {
     }
 
     private fun closeFragment() {
-        // TODO このfragmentをremoveしたいが、戻り先のfragmentがないのでホストのActivityを閉じて終了させる
         requireActivity().finish()
     }
 
@@ -175,12 +174,13 @@ class CustomWebViewFragment : Fragment() {
         else -> progressLayout.visibility = View.GONE
     }
 
+    //--------------------------------------------------- InternetError
     private fun showInternetError(active: Boolean) = when (active) {
         true -> setupInternetErrorLayout(View.VISIBLE, true, onClick = { webView.reload() })
         else -> setupInternetErrorLayout(View.GONE, false, null)
     }
 
-    //--------------------------------------------------- InternetError
+
     private fun setupInternetErrorLayout(
         visibility: Int,
         isClickable: Boolean,
