@@ -169,9 +169,11 @@ class CustomWebViewFragment : Fragment() {
     }
 
     //--------------------------------------------------- LoadingProgress
-    private fun showLoadingProgress(active: Boolean) = when (active) {
-        true -> progressLayout.visibility = View.VISIBLE
-        else -> progressLayout.visibility = View.GONE
+    private fun showLoadingProgress(active: Boolean) {
+        progressLayout.visibility = when (active) {
+            true -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 
     //--------------------------------------------------- InternetError
@@ -249,22 +251,18 @@ class CustomWebViewFragment : Fragment() {
     }
 
     private fun updateFooterLayout() {
-        when (webView.canGoBack()) {
-            true -> setFooterItemIsClickable(webview_go_back_button, true)
-            else -> setFooterItemIsClickable(webview_go_back_button, false)
-        }
-        when (webView.canGoForward()) {
-            true -> setFooterItemIsClickable(webview_go_forward_button, true)
-            else -> setFooterItemIsClickable(webview_go_forward_button, false)
-        }
+        setFooterItemIsClickable(webview_go_back_button, webView.canGoBack())
+        setFooterItemIsClickable(webview_go_forward_button, webView.canGoForward())
     }
 
     private fun setFooterItemIsClickable(view: TextView, isClickable: Boolean) {
         view.isClickable = isClickable
-        when (view.isClickable) {
-            true -> view.setTextColor(Color.WHITE)
-            else -> view.setTextColor(Color.GRAY)
-        }
+        view.setTextColor(getClickableColor(isClickable))
+    }
+
+    private fun getClickableColor(isClickable: Boolean) = when (isClickable) {
+        true -> Color.WHITE
+        else -> Color.GRAY
     }
 
     //--------------------------------------------------- companion object
